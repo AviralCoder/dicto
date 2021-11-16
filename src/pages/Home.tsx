@@ -6,7 +6,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { new_ } from "../types/types";
 
 export default function Home() {
-    const [data, setData] = useLocalStorage("DICTO-DATA", {
+    const [data] = useLocalStorage("DICTO-DATA", {
         assignments: [
             {
                 title: "Wow!",
@@ -17,7 +17,7 @@ export default function Home() {
         ],
     });
     const [modalOpen, setModalOpen] = useState(false);
-    const [newType, setNewType] = useState<new_>("assignment");
+    const [newType] = useState<new_>("assignment");
     const [dateValue, setDateValue] = useState("");
 
     useEffect(() => {
