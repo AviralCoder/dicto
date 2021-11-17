@@ -1,62 +1,26 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
-
-const Search = styled("div")(({ theme }) => ({
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-        backgroundColor: "#fa7676",
-    },
-    "&:focus": {
-        backgroundColor: "#fa7676",
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-        marginLeft: theme.spacing(1),
-        width: "auto",
-    },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: "inherit",
-    "& .MuiInputBase-input": {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create("width"),
-        width: "100%",
-        [theme.breakpoints.up("sm")]: {
-            width: "12ch",
-            "&:focus": {
-                width: "20ch",
-            },
-        },
-    },
-}));
+import GitHubIcon from "@mui/icons-material/GitHub";
+import IconButton from "@mui/material/IconButton";
+import WarningIcon from "@mui/icons-material/Warning";
 
 export default function Navbar() {
     return (
         <Box sx={{ flexGrow: 1 }} style={{ margin: 0 }}>
             <AppBar position="static">
                 <Toolbar>
+                    <IconButton
+                        onClick={() => {
+                            window.location.href =
+                                "https://github.com/AviralCoder/dicto";
+                        }}
+                    >
+                        <GitHubIcon style={{ color: "#fff" }} />
+                    </IconButton>
+
                     <Typography
                         variant="h6"
                         noWrap
@@ -68,15 +32,10 @@ export default function Navbar() {
                     >
                         Dicto
                     </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ "aria-label": "search" }}
-                        />
-                    </Search>
+
+                    <IconButton>
+                        <WarningIcon style={{ color: "#fff" }} />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>

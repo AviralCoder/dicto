@@ -32,6 +32,8 @@ export default function New(props: NewProps) {
                         sx={{
                             width: "100%",
                         }}
+                        value={props.titleValue}
+                        onChange={props.onTitleChange}
                     />
 
                     <TextField
@@ -43,6 +45,23 @@ export default function New(props: NewProps) {
                         }}
                         multiline
                         rows={4}
+                        value={props.descriptionValue}
+                        onChange={props.onDescriptionChange}
+                    />
+
+                    <input
+                        type="date"
+                        style={{
+                            marginTop: 20,
+                            width: "100%",
+                            border: "1px solid #acacad",
+                            padding: 10,
+                            borderRadius: 5,
+                            fontFamily: "sans-serif",
+                        }}
+                        value={props.dateValue}
+                        onChange={props.onDateValueChange}
+                        className="date-"
                     />
 
                     <Button
@@ -52,6 +71,7 @@ export default function New(props: NewProps) {
                             width: "100%",
                             marginTop: 3,
                         }}
+                        onClick={props.onAddClick}
                     >
                         Add
                     </Button>
