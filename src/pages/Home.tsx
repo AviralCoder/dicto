@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Add from "../components/Add";
 import Assignment from "../components/Assignment";
 import Navbar from "../components/Navbar";
 import New from "../components/New";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { new_ } from "../types/types";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export default function Home() {
     const [data, setData] = useLocalStorage("DICTO-DATA", {
@@ -14,6 +19,7 @@ export default function Home() {
                 title: "Get Started!",
                 description: "Learn Algebra!",
                 due: "29/11/21",
+                id: Date.now(),
             },
         ],
     });
@@ -23,6 +29,7 @@ export default function Home() {
         title: "",
         description: "",
         due: "",
+        filter: "",
     });
 
     useEffect(() => {
@@ -42,11 +49,12 @@ export default function Home() {
                         title: values.title,
                         description: values.description,
                         due: values.due,
+                        id: Date.now(),
                     },
                 ],
             });
             setModalOpen(false);
-            setValues({ title: "", description: "", due: "" });
+            setValues({ ...values, title: "", description: "", due: "" });
         }
     }
 
@@ -87,9 +95,39 @@ export default function Home() {
                 onTaskClick={() => {}}
             />
 
-            <Typography variant="h5" style={{ marginLeft: 20, marginTop: 20 }}>
+            <Typography
+                variant="h5"
+                style={{ marginLeft: 20, marginTop: 20 }}
+                className="at"
+            >
                 Assignments
             </Typography>
+
+            <Box
+                sx={{ minWidth: 120, marginLeft: 2, marginTop: 3 }}
+                className="select-box"
+            >
+                <FormControl style={{ width: 300 }}>
+                    <InputLabel id="demo-simple-select-label">
+                        Filter
+                    </InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={values.filter}
+                        label="Age"
+                        onChange={(e: SelectChangeEvent) =>
+                            setValues({
+                                ...values,
+                                filter: e.target.value as string,
+                            })
+                        }
+                    >
+                        <MenuItem value={1}>All</MenuItem>
+                        <MenuItem value={2}>Due soon</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
 
             {data.assignments.length === 0 ? (
                 <Typography
@@ -101,14 +139,16 @@ export default function Home() {
             ) : (
                 <div>
                     {data.assignments.map((elem) => (
-                        <Assignment
-                            title={elem.title}
-                            description={elem.description}
-                            due={elem.due}
-                            onDeleteClick={() => {
-                                deleteAssignment(elem);
-                            }}
-                        />
+                        <React.Fragment key={elem.id}>
+                            <Assignment
+                                title={elem.title}
+                                description={elem.description}
+                                due={elem.due}
+                                onDeleteClick={() => {
+                                    deleteAssignment(elem);
+                                }}
+                            />
+                        </React.Fragment>
                     ))}
                 </div>
             )}

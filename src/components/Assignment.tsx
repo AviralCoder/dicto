@@ -19,6 +19,7 @@ export default function Assignment(props: AssignmentProps) {
                 marginTop: 20,
                 position: "relative",
             }}
+            className="card"
         >
             <Typography variant="h6" style={{ marginBottom: 10 }}>
                 {props.title}

@@ -3,3 +3,21 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+@media screen and (max-width: 768px) {
+    .home {
+        text-align: center;
+    }
+
+    .card {
+        margin-left: 0 !important;
+    }
+
+    .at {
+        margin-left: 0 !important;
+    }
+
+    .select-box {
+        margin-left: 0 !important;
+    }
+}

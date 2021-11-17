@@ -22,7 +22,7 @@ export default function Add(props: AddProps) {
     return (
         <SpeedDial
             ariaLabel="Add"
-            sx={{ position: "absolute", bottom: 16, right: 16 }}
+            sx={{ position: "fixed", bottom: 16, right: 16 }}
             icon={<SpeedDialIcon />}
         >
             {options.map((opt) => (
