@@ -7,20 +7,23 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import WarningIcon from "@mui/icons-material/Warning";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Navbar() {
     return (
         <Box sx={{ flexGrow: 1 }} style={{ margin: 0 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
-                        onClick={() => {
-                            window.location.href =
-                                "https://github.com/AviralCoder/dicto";
-                        }}
-                    >
-                        <GitHubIcon style={{ color: "#fff" }} />
-                    </IconButton>
+                    <Tooltip title="Open Project on GitHub">
+                        <IconButton
+                            onClick={() => {
+                                window.location.href =
+                                    "https://github.com/AviralCoder/dicto";
+                            }}
+                        >
+                            <GitHubIcon style={{ color: "#fff" }} />
+                        </IconButton>
+                    </Tooltip>
 
                     <Typography
                         variant="h6"
@@ -34,13 +37,17 @@ export default function Navbar() {
                         Dicto
                     </Typography>
 
-                    <IconButton>
-                        <QuestionAnswerIcon style={{ color: "#fff" }} />
-                    </IconButton>
+                    <Tooltip title="FAQ">
+                        <IconButton>
+                            <QuestionAnswerIcon style={{ color: "#fff" }} />
+                        </IconButton>
+                    </Tooltip>
 
-                    <IconButton>
-                        <WarningIcon style={{ color: "#fff" }} />
-                    </IconButton>
+                    <Tooltip title="Report Error">
+                        <IconButton>
+                            <WarningIcon style={{ color: "#fff" }} />
+                        </IconButton>
+                    </Tooltip>
                 </Toolbar>
             </AppBar>
         </Box>
