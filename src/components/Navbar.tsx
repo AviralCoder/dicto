@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import WarningIcon from "@mui/icons-material/Warning";
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 
 export default function Navbar() {
     return (
@@ -32,6 +33,10 @@ export default function Navbar() {
                     >
                         Dicto
                     </Typography>
+
+                    <IconButton>
+                        <QuestionAnswerIcon style={{ color: "#fff" }} />
+                    </IconButton>
 
                     <IconButton>
                         <WarningIcon style={{ color: "#fff" }} />
