@@ -14,7 +14,7 @@ export default function Navbar() {
         <Box sx={{ flexGrow: 1 }} style={{ margin: 0 }}>
             <AppBar position="static">
                 <Toolbar>
-                    <Tooltip title="Open Project on GitHub">
+                    <Tooltip title="Open Project on GitHub" arrow>
                         <IconButton
                             onClick={() => {
                                 window.location.href =
@@ -37,13 +37,13 @@ export default function Navbar() {
                         Dicto
                     </Typography>
 
-                    <Tooltip title="FAQ">
+                    <Tooltip title="FAQ" arrow>
                         <IconButton>
                             <QuestionAnswerIcon style={{ color: "#fff" }} />
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title="Report Error">
+                    <Tooltip title="Report Error" arrow>
                         <IconButton>
                             <WarningIcon style={{ color: "#fff" }} />
                         </IconButton>
