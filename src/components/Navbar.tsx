@@ -7,6 +7,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import IconButton from "@mui/material/IconButton";
 import WarningIcon from "@mui/icons-material/Warning";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
+import HelpIcon from "@mui/icons-material/Help";
 import Tooltip from "@mui/material/Tooltip";
 
 export default function Navbar() {
@@ -46,6 +47,12 @@ export default function Navbar() {
                     <Tooltip title="Report Error" arrow>
                         <IconButton>
                             <WarningIcon style={{ color: "#fff" }} />
+                        </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Help" arrow>
+                        <IconButton>
+                            <HelpIcon style={{ color: "#fff" }} />
                         </IconButton>
                     </Tooltip>
                 </Toolbar>
