@@ -5,12 +5,7 @@ import Navbar from "../components/Navbar";
 import New from "../components/New";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
 import { new_ } from "../types/types";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export default function Home() {
     const [data, setData] = useLocalStorage("DICTO-DATA", {
@@ -29,7 +24,6 @@ export default function Home() {
         title: "",
         description: "",
         due: "",
-        filter: "",
     });
 
     useEffect(() => {
@@ -103,55 +97,30 @@ export default function Home() {
                 Assignments
             </Typography>
 
-            <Box
-                sx={{ minWidth: 120, marginLeft: 2, marginTop: 3 }}
-                className="select-box"
-            >
-                <FormControl style={{ width: 300 }}>
-                    <InputLabel id="demo-simple-select-label">
-                        Filter
-                    </InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={values.filter}
-                        label="Age"
-                        onChange={(e: SelectChangeEvent) =>
-                            setValues({
-                                ...values,
-                                filter: e.target.value as string,
-                            })
-                        }
+            {data.assignments &&
+                (data.assignments.length === 0 ? (
+                    <Typography
+                        variant="h6"
+                        style={{ marginLeft: 20, marginTop: 20, color: "gray" }}
                     >
-                        <MenuItem value={1}>All</MenuItem>
-                        <MenuItem value={2}>Due soon</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-
-            {data.assignments.length === 0 ? (
-                <Typography
-                    variant="h6"
-                    style={{ marginLeft: 20, marginTop: 20, color: "gray" }}
-                >
-                    No Assignments Found
-                </Typography>
-            ) : (
-                <div>
-                    {data.assignments.map((elem) => (
-                        <React.Fragment key={elem.id}>
-                            <Assignment
-                                title={elem.title}
-                                description={elem.description}
-                                due={elem.due}
-                                onDeleteClick={() => {
-                                    deleteAssignment(elem);
-                                }}
-                            />
-                        </React.Fragment>
-                    ))}
-                </div>
-            )}
+                        No Assignments Found
+                    </Typography>
+                ) : (
+                    <div>
+                        {data.assignments.map((elem) => (
+                            <React.Fragment key={elem.id}>
+                                <Assignment
+                                    title={elem.title}
+                                    description={elem.description}
+                                    due={elem.due}
+                                    onDeleteClick={() => {
+                                        deleteAssignment(elem);
+                                    }}
+                                />
+                            </React.Fragment>
+                        ))}
+                    </div>
+                ))}
         </section>
     );
 }
