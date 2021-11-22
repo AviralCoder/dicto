@@ -1,11 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import Add from "../components/Add";
 import Assignment from "../components/Assignment";
 import Navbar from "../components/Navbar";
 import New from "../components/New";
 import useLocalStorage from "../hooks/useLocalStorage";
 import Typography from "@mui/material/Typography";
-import { new_ } from "../types/types";
+import { DialogBoxProps, new_ } from "../types/types";
+import DialogBox from "../components/DialogBox";
+
+const DialogBoxPropsContext = createContext<DialogBoxProps>({
+    heading: "",
+    body: "",
+    buttons: [
+        {
+            text: "",
+            onClick: () => {},
+        },
+    ],
+    open: false,
+    onClose: () => {},
+});
+const SetDialogBoxPropsContext = createContext<
+    React.Dispatch<React.SetStateAction<DialogBoxProps>>
+>(() => {});
 
 export default function Home() {
     const [data, setData] = useLocalStorage("DICTO-DATA", {
@@ -25,10 +42,18 @@ export default function Home() {
         description: "",
         due: "",
     });
-
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
+    const [dialogBoxProps, setDialogBoxProps] = useState<DialogBoxProps>({
+        heading: "",
+        body: "",
+        buttons: [
+            {
+                text: "",
+                onClick: () => {},
+            },
+        ],
+        open: false,
+        onClose: () => {},
+    });
 
     function newAssignment() {
         if (
@@ -36,19 +61,25 @@ export default function Home() {
             values.description !== "" &&
             values.due !== ""
         ) {
-            setData({
-                assignments: [
-                    ...data.assignments,
-                    {
-                        title: values.title,
-                        description: values.description,
-                        due: values.due,
-                        id: Date.now(),
-                    },
-                ],
-            });
-            setModalOpen(false);
-            setValues({ ...values, title: "", description: "", due: "" });
+            if (values.title.length > 20) {
+                alert(
+                    "Only 20 alphabets accepted in the title. Please give detail in the description."
+                );
+            } else {
+                setData({
+                    assignments: [
+                        ...data.assignments,
+                        {
+                            title: values.title,
+                            description: values.description,
+                            due: values.due,
+                            id: Date.now(),
+                        },
+                    ],
+                });
+                setModalOpen(false);
+                setValues({ ...values, title: "", description: "", due: "" });
+            }
         }
     }
 
@@ -58,69 +89,90 @@ export default function Home() {
     }
 
     return (
-        <section className="home">
-            <Navbar />
+        <DialogBoxPropsContext.Provider value={dialogBoxProps}>
+            <SetDialogBoxPropsContext.Provider value={setDialogBoxProps}>
+                <section className="home">
+                    <Navbar />
 
-            <New
-                open={modalOpen}
-                onClose={() => {
-                    setModalOpen(false);
-                }}
-                newType={newType}
-                dateValue={values.due}
-                onDateValueChange={(e) => {
-                    setValues({ ...values, due: e.target.value });
-                }}
-                onAddClick={newAssignment}
-                titleValue={values.title}
-                onTitleChange={(e) => {
-                    setValues({ ...values, title: e.target.value });
-                }}
-                descriptionValue={values.description}
-                onDescriptionChange={(e) => {
-                    setValues({ ...values, description: e.target.value });
-                }}
-            />
+                    <New
+                        open={modalOpen}
+                        onClose={() => {
+                            setModalOpen(false);
+                        }}
+                        newType={newType}
+                        dateValue={values.due}
+                        onDateValueChange={(e) => {
+                            setValues({ ...values, due: e.target.value });
+                        }}
+                        onAddClick={newAssignment}
+                        titleValue={values.title}
+                        onTitleChange={(e) => {
+                            setValues({ ...values, title: e.target.value });
+                        }}
+                        descriptionValue={values.description}
+                        onDescriptionChange={(e) => {
+                            setValues({
+                                ...values,
+                                description: e.target.value,
+                            });
+                        }}
+                    />
 
-            <Add
-                onAssignmentClick={() => {
-                    setModalOpen(true);
-                }}
-                onTaskClick={() => {}}
-            />
+                    <Add
+                        onAssignmentClick={() => {
+                            setModalOpen(true);
+                        }}
+                        onTaskClick={() => {}}
+                    />
 
-            <Typography
-                variant="h5"
-                style={{ marginLeft: 20, marginTop: 20 }}
-                className="at"
-            >
-                Assignments
-            </Typography>
-
-            {data.assignments &&
-                (data.assignments.length === 0 ? (
                     <Typography
-                        variant="h6"
-                        style={{ marginLeft: 20, marginTop: 20, color: "gray" }}
+                        variant="h5"
+                        style={{ marginLeft: 20, marginTop: 20 }}
+                        className="at"
                     >
-                        No Assignments Found
+                        Assignments
                     </Typography>
-                ) : (
-                    <div>
-                        {data.assignments.map((elem) => (
-                            <React.Fragment key={elem.id}>
-                                <Assignment
-                                    title={elem.title}
-                                    description={elem.description}
-                                    due={elem.due}
-                                    onDeleteClick={() => {
-                                        deleteAssignment(elem);
-                                    }}
-                                />
-                            </React.Fragment>
+
+                    {data.assignments &&
+                        (data.assignments.length === 0 ? (
+                            <Typography
+                                variant="h6"
+                                style={{
+                                    marginLeft: 20,
+                                    marginTop: 20,
+                                    color: "gray",
+                                }}
+                            >
+                                No Assignments Found
+                            </Typography>
+                        ) : (
+                            <div>
+                                {data.assignments.map((elem) => (
+                                    <React.Fragment key={elem.id}>
+                                        <Assignment
+                                            title={elem.title}
+                                            description={elem.description}
+                                            due={elem.due}
+                                            onDeleteClick={() => {
+                                                deleteAssignment(elem);
+                                            }}
+                                        />
+                                    </React.Fragment>
+                                ))}
+                            </div>
                         ))}
-                    </div>
-                ))}
-        </section>
+
+                    <DialogBox
+                        body={dialogBoxProps.body}
+                        heading={dialogBoxProps.heading}
+                        open={dialogBoxProps.open}
+                        buttons={dialogBoxProps.buttons}
+                        onClose={dialogBoxProps.onClose}
+                    />
+                </section>
+            </SetDialogBoxPropsContext.Provider>
+        </DialogBoxPropsContext.Provider>
     );
 }
+
+export { DialogBoxPropsContext, SetDialogBoxPropsContext };

@@ -5,17 +5,13 @@ import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
 import CheckIcon from "@mui/icons-material/Check";
 import { getNumberOfDays } from "../utils/utils";
-import { useEffect } from "react";
+import { DialogBoxPropsContext, SetDialogBoxPropsContext } from "../pages/Home";
+import { useContext } from "react";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
 export default function Assignment(props: AssignmentProps) {
-    useEffect(() => {
-        console.log(
-            `${props.title} - ${props.due} - ${getNumberOfDays(
-                new Date().toString(),
-                props.due
-            )}`
-        );
-    });
+    const dialogBoxProps = useContext(DialogBoxPropsContext);
+    const setDialogBoxProps = useContext(SetDialogBoxPropsContext);
 
     function renderChip(): JSX.Element {
         const days_left: number = getNumberOfDays(
@@ -55,6 +51,36 @@ export default function Assignment(props: AssignmentProps) {
         }
     }
 
+    function showDialogBox(): void {
+        setDialogBoxProps({
+            ...dialogBoxProps,
+            open: true,
+            heading: props.title,
+            body: `${props.description} - Due: ${props.due}`,
+            buttons: [
+                {
+                    text: "Delete",
+                    onClick: () => {
+                        props.onDeleteClick();
+                        setDialogBoxProps({
+                            ...dialogBoxProps,
+                            open: false,
+                        });
+                    },
+                },
+                {
+                    text: "Close",
+                    onClick: () => {
+                        setDialogBoxProps({
+                            ...dialogBoxProps,
+                            open: false,
+                        });
+                    },
+                },
+            ],
+        });
+    }
+
     return (
         <Paper
             elevation={2}
@@ -67,6 +93,7 @@ export default function Assignment(props: AssignmentProps) {
                 marginLeft: 20,
                 marginTop: 20,
                 position: "relative",
+                cursor: "pointer",
             }}
             className="card"
         >
@@ -82,9 +109,16 @@ export default function Assignment(props: AssignmentProps) {
 
             <IconButton
                 onClick={props.onDeleteClick}
-                style={{ position: "absolute", right: 5, bottom: 5 }}
+                style={{ position: "absolute", right: 2, bottom: 2 }}
             >
                 <CheckIcon />
+            </IconButton>
+
+            <IconButton
+                onClick={showDialogBox}
+                style={{ position: "absolute", right: 30, bottom: 2 }}
+            >
+                <FullscreenIcon />
             </IconButton>
         </Paper>
     );

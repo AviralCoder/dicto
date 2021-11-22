@@ -24,3 +24,16 @@ export interface AssignmentProps {
     description: string;
     onDeleteClick: () => void;
 }
+
+type Buttons = {
+    text: string;
+    onClick: () => void;
+};
+
+export interface DialogBoxProps {
+    heading: string;
+    body: string;
+    buttons: Buttons[];
+    open: boolean;
+    onClose: () => void;
+}
