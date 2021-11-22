@@ -93,7 +93,6 @@ export default function Assignment(props: AssignmentProps) {
                 marginLeft: 20,
                 marginTop: 20,
                 position: "relative",
-                cursor: "pointer",
             }}
             className="card"
         >
