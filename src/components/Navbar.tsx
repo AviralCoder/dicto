@@ -9,6 +9,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import HelpIcon from "@mui/icons-material/Help";
 import Tooltip from "@mui/material/Tooltip";
+import ColorLensIcon from "@mui/icons-material/ColorLens";
 
 export default function Navbar() {
     return (
@@ -53,6 +54,12 @@ export default function Navbar() {
                     <Tooltip title="Help" arrow>
                         <IconButton>
                             <HelpIcon style={{ color: "#fff" }} />
+                        </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Change Theme" arrow>
+                        <IconButton>
+                            <ColorLensIcon style={{ color: "#fff" }} />
                         </IconButton>
                     </Tooltip>
                 </Toolbar>
