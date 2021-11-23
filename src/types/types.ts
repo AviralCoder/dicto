@@ -3,7 +3,7 @@ export interface AddProps {
     onTaskClick: () => void;
 }
 
-export type new_ = "assignment" | "subject" | "task";
+export type new_ = "assignment" | "task";
 
 export interface NewProps {
     open: boolean;

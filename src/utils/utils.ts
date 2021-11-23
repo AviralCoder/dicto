@@ -6,3 +6,7 @@ export function getNumberOfDays(start: string, end: string): number {
     const diffInDays = Math.round(diffInTime / oneDay);
     return diffInDays;
 }
+
+export function randomColor(colorsArr: string[]) {
+    return colorsArr[Math.floor(Math.random() * (colorsArr.length - 1))];
+}

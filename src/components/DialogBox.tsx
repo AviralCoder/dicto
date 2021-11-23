@@ -25,7 +25,11 @@ export default function DialogBox(props: DialogBoxProps) {
                 </DialogContent>
                 <DialogActions>
                     {props.buttons.map((elem) => (
-                        <Button variant="text" onClick={elem.onClick}>
+                        <Button
+                            variant="text"
+                            onClick={elem.onClick}
+                            key={elem.text}
+                        >
                             {elem.text}
                         </Button>
                     ))}

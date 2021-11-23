@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -10,8 +11,13 @@ import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import HelpIcon from "@mui/icons-material/Help";
 import Tooltip from "@mui/material/Tooltip";
 import ColorLensIcon from "@mui/icons-material/ColorLens";
+import { SetPrimaryColorContext } from "../App";
+import { randomColor } from "../utils/utils";
+import { COLORS } from "../lib/lib";
 
 export default function Navbar() {
+    const setTheme = useContext(SetPrimaryColorContext);
+
     return (
         <Box sx={{ flexGrow: 1 }} style={{ margin: 0 }}>
             <AppBar position="static">
@@ -58,7 +64,9 @@ export default function Navbar() {
                     </Tooltip>
 
                     <Tooltip title="Change Theme" arrow>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => setTheme(randomColor(COLORS))}
+                        >
                             <ColorLensIcon style={{ color: "#fff" }} />
                         </IconButton>
                     </Tooltip>
